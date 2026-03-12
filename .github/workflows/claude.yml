@@ -17,11 +17,11 @@ jobs:
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
-    
+
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: read
       pull-requests: write
       issues: write
       id-token: write
@@ -40,14 +40,7 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
-          additional_permissions: |
-            actions: read
-
-          # Shows full Claude output in workflow logs (useful for debugging)
           show_full_output: true
 
-          # Optional: Example prompt
-          # prompt: "Review the pull request and explain the changes."
-
-          # Optional advanced configuration
-          # claude_args: '--allowed-tools Bash(git:*)'
+          additional_permissions: |
+            actions: read
